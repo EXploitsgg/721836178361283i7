@@ -1,0 +1,386 @@
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui", player.PlayerGui)
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(1, 0, 1.1, 0) -- Covers the toolbar fully
+frame.Position = UDim2.new(0, 0, -0.05, 0) -- Adjust for toolbar coverage
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+
+-- Title Label
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0.2, 0)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.Text = "Welcome! Enter the Key to Continue"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 40
+
+-- Key Entry Box
+local keyBox = Instance.new("TextBox", frame)
+keyBox.Size = UDim2.new(0.5, 0, 0.1, 0)
+keyBox.Position = UDim2.new(0.25, 0, 0.5, 0)
+keyBox.PlaceholderText = "Delete this and enter key"
+keyBox.TextColor3 = Color3.new(1, 1, 1)
+keyBox.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+keyBox.Font = Enum.Font.SourceSansBold
+keyBox.TextSize = 24
+keyBox.ClearTextOnFocus = false
+
+-- Submit Button
+local submitButton = Instance.new("TextButton", frame)
+submitButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+submitButton.Position = UDim2.new(0.35, 0, 0.65, 0)
+submitButton.Text = "(Delete text above and place key) Submit Key"
+submitButton.TextColor3 = Color3.new(1, 1, 1)
+submitButton.BackgroundColor3 = Color3.new(0, 0.8, 0)
+submitButton.Font = Enum.Font.SourceSansBold
+submitButton.TextSize = 24
+
+-- Correct Key (Change this to your desired key)
+local correctKey = "FruitBattlegrounds2025"
+
+-- Block execution until the correct key is entered
+local keyEntered = false
+
+submitButton.MouseButton1Click:Connect(function()
+    if keyBox.Text == correctKey then
+        keyEntered = true
+        gui:Destroy() -- Close UI when correct key is entered
+    else
+        keyBox.Text = "" -- Clear box for retry
+        keyBox.PlaceholderText = "Incorrect! Try Again"
+        keyBox.TextColor3 = Color3.new(1, 0, 0) -- Red text for error indication
+        wait(1)
+        keyBox.TextColor3 = Color3.new(1, 1, 1) -- Reset color
+        keyBox.PlaceholderText = "Enter Key Here"
+    end
+end)
+
+-- Wait until key is entered correctly before proceeding
+repeat wait() until keyEntered
+
+-- Now continue with the rest of the script
+print("Key verified! Proceeding with the script...")
+
+local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/refs/heads/main/source.lua", true))()
+
+local Window = Luna:CreateWindow({
+	Name = "Lunar fbtg", -- This Is Title Of Your Window
+	Subtitle = nil, -- A Gray Subtitle next To the main title.
+	LogoID = "82795327169782", -- The Asset ID of your logo. Set to nil if you do not have a logo for Luna to use.
+	LoadingEnabled = true, -- Whether to enable the loading animation. Set to false if you do not want the loading screen or have your own custom one.
+	LoadingTitle = "by exploitsgg", -- Header for loading screen
+	LoadingSubtitle = "made by !mama", -- Subtitle for loading screen
+
+	ConfigSettings = {
+		RootFolder = nil, -- The Root Folder Is Only If You Have A Hub With Multiple Game Scripts and u may remove it. DO NOT ADD A SLASH
+		ConfigFolder = "Lunar Fruit battlegrounds" -- The Name Of The Folder Where Luna Will Store Configs For This Script. DO NOT ADD A SLASH
+	},
+
+	KeySystem = false, -- As Of Beta 6, Luna Has officially Implemented A Key System!
+	KeySettings = {
+		Title = "Lunar Key system",
+		Subtitle = "Get key in discord!",
+		Note = "You get the key in a click of a button!",
+		SaveInRoot = false, -- Enabling will save the key in your RootFolder (YOU MUST HAVE ONE BEFORE ENABLING THIS OPTION)
+		SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+		Key = {"earlyaccess2025"}, -- List of keys that will be accepted by the system, please use a system like Pelican or Luarmor that provide key strings based on your HWID since putting a simple string is very easy to bypass
+		SecondAction = {
+			Enabled = false, -- Set to false if you do not want a second action,
+			Type = "Link", -- Link / Discord.
+			Parameter = "" -- If Type is Discord, then put your invite link (DO NOT PUT DISCORD.GG/). Else, put the full link of your key system here.
+		}
+	}
+})
+
+
+local Tab = Window:CreateTab({
+	Name = "Auto Farm",
+	Icon = "view_in_ar",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+
+local Paragraph = Tab:CreateParagraph({
+	Title = "Tutorial",
+	Text = "First You need an auto clicker (any kind) make the Click Interval 1 second then press the toggle and turn on your auto clicker at the same time and afk 💝🙏 (REQUIRES GOOD INTERNET!)"
+})
+
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local VirtualUser = game:GetService("VirtualUser")
+VirtualUser:CaptureController()
+
+local autoActivateMoves = false
+
+-- Helper function to simulate a key press
+local function simulateKeyPress(key)
+    -- Send key down then key up events with a brief pause
+    VirtualInputManager:SendKeyEvent(true, key, false, game)
+    wait(0.1)
+    VirtualInputManager:SendKeyEvent(false, key, false, game)
+end
+
+-- Function that cycles through keys 1-5 then simulates a mouse click
+local function activateMoves()
+    while autoActivateMoves do
+        simulateKeyPress(Enum.KeyCode.One)
+        wait(1)
+        simulateKeyPress(Enum.KeyCode.Two)
+        wait(1)
+        simulateKeyPress(Enum.KeyCode.Three)
+        wait(1)
+        simulateKeyPress(Enum.KeyCode.Four)
+        wait(1)
+        simulateKeyPress(Enum.KeyCode.Five)
+        wait(1)
+        -- Simulate a mouse click (adjust the Vector2 position as needed)
+        VirtualUser:Button1Down(Vector2.new(500, 500))  
+        wait(0.1)
+        VirtualUser:Button1Up(Vector2.new(500, 500))
+        wait(1)
+    end
+end
+
+-- Create the toggle using your UI system
+local Toggle = Tab:CreateToggle({
+    Name = "Auto Use Moves with Keys",
+    Description = "Goes through your inventory moves by pressing 1-5 and clicking the screen.",
+    CurrentValue = false,
+    Callback = function(Value)
+        autoActivateMoves = Value
+        if autoActivateMoves then
+            activateMoves()  -- Start the loop
+        end
+    end
+}, "ToggleAutoMoves")
+
+local Tab = Window:CreateTab({
+	Name = "Teleport",
+	Icon = "view_in_ar",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Colloseum",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+			local player = game.Players.LocalPlayer
+			local colosseumBlock = game.Workspace.Areas:FindFirstChild("Colloseum")
+			
+			if colosseumBlock and player.Character and player.Character.PrimaryPart then
+				player.Character:SetPrimaryPartCFrame(colosseumBlock.CFrame)
+			else
+				warn("Colloseum not found")
+			end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Dressrosa",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+			local player = game.Players.LocalPlayer
+			local DressrosaBlock = game.Workspace.Areas:FindFirstChild("Dressrosa")
+			
+			if DressrosaBlock and player.Character and player.Character.PrimaryPart then
+				player.Character:SetPrimaryPartCFrame(DressrosaBlock.CFrame)
+			else
+				warn("Dressrosa not found")
+			end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Forest",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+			local player = game.Players.LocalPlayer
+			local ForestBlock = game.Workspace.Areas:FindFirstChild("Forest")
+			
+			if ForestBlock and player.Character and player.Character.PrimaryPart then
+				player.Character:SetPrimaryPartCFrame(ForestBlock.CFrame)
+			else
+				warn("Forest not found")
+			end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Safe zone",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+			local player = game.Players.LocalPlayer
+			local spawnLocation = game.Workspace.SafeZones.MainSpawn:FindFirstChild("SpawnLocation")
+			
+			if spawnLocation and player.Character and player.Character.PrimaryPart then
+				local newPosition = spawnLocation.CFrame + Vector3.new(0, 8, 0) -- Adjust height (5 studs above)
+				player.Character:SetPrimaryPartCFrame(newPosition)
+			else
+				warn("Spawn Location not found")
+			end
+    	end
+})
+
+Tab:CreateDivider()
+
+local Label = Tab:CreateLabel({
+	Text = "Boss Spawn",
+	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Button = Tab:CreateButton({
+    Name = "Teleport to Marco",
+    Description = "Teleports you to Marco",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local bigTree = workspace.Terrain:FindFirstChild("BigTree")  -- Look for BigTree under workspace.Terrain
+        
+        if bigTree then
+            if player.Character and player.Character.PrimaryPart then
+                -- Teleport the player's character to BigTree's position
+                player.Character:SetPrimaryPartCFrame(bigTree.CFrame)
+            end
+        else
+            -- Create a temporary GUI message informing that BigTree couldn't be found
+            local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+            local textLabel = Instance.new("TextLabel", screenGui)
+            
+            textLabel.Size = UDim2.new(0.5, 0, 0.1, 0)
+            textLabel.Position = UDim2.new(0.25, 0, 0.1, 0)
+            textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+            textLabel.TextColor3 = Color3.new(1, 1, 1)
+            textLabel.Font = Enum.Font.SourceSansBold
+            textLabel.TextSize = 30
+            textLabel.Text = "idk"
+            
+            -- Remove the message after 5 seconds
+            wait(5)
+            screenGui:Destroy()
+        end
+    end
+}, "TeleportBigTree")
+
+local Tab = Window:CreateTab({
+	Name = "Misc",
+	Icon = "view_in_ar",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+
+local WalkSpeedSlider = Tab:CreateSlider({
+    Name = "WalkSpeed Slider",
+    Range = {0, 200}, -- Min and max walk speed values
+    Increment = 5, -- Walk speed will change in steps of 5
+    CurrentValue = 16, -- Default Roblox walk speed
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.WalkSpeed = Value
+        end
+    end
+}, "WalkSpeed") -- Unique flag identifier
+
+local JumpHeightSlider = Tab:CreateSlider({
+    Name = "Jump Height Slider (Dosent work im fixing)",
+    Range = {0, 150}, -- Min and max jump height values
+    Increment = 5, -- Jump power will change in steps of 5
+    CurrentValue = 50, -- Default Roblox jump power
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.JumpPower = Value
+        end
+    end
+}, "JumpHeight") -- Unique flag identifier
+
+local Label = Tab:CreateLabel({
+	Text = "You cant undo this!",
+	Style = 3 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Button = Tab:CreateButton({
+	Name = "Ground Tool (FOR FRUITS THAT DONT HAVE KNOCKBACK)",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local tool = Instance.new("Tool") -- Create the tool
+            tool.Name = "Ground Spawner"
+            
+            local handle = Instance.new("Part") -- Create a handle for the tool
+            handle.Size = Vector3.new(2, 2, 2) -- Small part to represent the tool
+            handle.Name = "Handle"
+            handle.Parent = tool
+            
+            tool.RequiresHandle = true
+            tool.Parent = game.Players.LocalPlayer.Backpack -- Add tool to player's inventory
+            
+            tool.Activated:Connect(function()
+                local player = game.Players.LocalPlayer
+                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    local baseplate = Instance.new("Part")
+                    baseplate.Size = Vector3.new(50, 1, 50) -- Baseplate size
+                    baseplate.Position = player.Character.HumanoidRootPart.Position - Vector3.new(0, 1, 0) -- Position under player
+                    baseplate.Anchored = true
+                    baseplate.Parent = game.Workspace
+                end
+            end)
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Hollow Box Tool (FOR FRUITS THAT HAVE KNOCKBACK)",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local tool = Instance.new("Tool")
+            tool.Name = "Hollow Box Spawner"
+            
+            local handle = Instance.new("Part") -- Tool handle
+            handle.Size = Vector3.new(2, 2, 2)
+            handle.Name = "Handle"
+            handle.Parent = tool
+            
+            tool.RequiresHandle = true
+            tool.Parent = game.Players.LocalPlayer.Backpack -- Add to player's inventory
+            
+            tool.Activated:Connect(function()
+                local player = game.Players.LocalPlayer
+                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    local rootPos = player.Character.HumanoidRootPart.Position - Vector3.new(0, 3, 0) -- Position below player
+                    local size = Vector3.new(10, 10, 10) -- Box dimensions
+                    
+                    -- Function to create a box wall
+                    local function createWall(position, rotation)
+                        local wall = Instance.new("Part")
+                        wall.Size = Vector3.new(size.X, size.Y, 1) -- Thin wall
+                        wall.Position = position
+                        wall.Anchored = true
+                        wall.Parent = game.Workspace
+                        wall.Color = Color3.fromRGB(100, 100, 100) -- Gray color
+                        wall.Material = Enum.Material.Metal
+                        wall.Rotation = rotation
+                    end
+                    
+                    -- Create walls around the hollow box
+                    createWall(rootPos + Vector3.new(0, 0, size.Z/2), Vector3.new(0, 0, 0))  -- Front
+                    createWall(rootPos + Vector3.new(0, 0, -size.Z/2), Vector3.new(0, 180, 0)) -- Back
+                    createWall(rootPos + Vector3.new(size.X/2, 0, 0), Vector3.new(0, 90, 0)) -- Right
+                    createWall(rootPos + Vector3.new(-size.X/2, 0, 0), Vector3.new(0, -90, 0)) -- Left
+                    createWall(rootPos + Vector3.new(0, size.Y/2, 0), Vector3.new(90, 0, 0)) -- Top
+                    createWall(rootPos + Vector3.new(0, -size.Y/2, 0), Vector3.new(-90, 0, 0)) -- Bottom
+                end
+            end)
+    	end
+})
+
+local Label = Tab:CreateLabel({
+	Text = "Btw the box spawns at the place your at!",
+	Style = 2 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Button = Tab:CreateButton({
+	Name = "Inf Yield",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    	end
+})
