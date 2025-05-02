@@ -222,6 +222,113 @@ local Button = Tab:CreateButton({
     	end
 })
 
+local Label = Tab:CreateLabel({
+	Text = "Teleport NPC's",
+	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Kuma",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Kuma")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("wtf")
+            end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Mystery Guy",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Mystery Guy")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("Mystery Guy not found in workspace.NPCs!")
+            end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Scientist",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Scientist")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("Scientist not found in workspace.NPCs!")
+            end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to suro book",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Soru Book")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("Soru Book not found in workspace.NPCs!")
+            end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Titles NPC",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Titles NPC")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("Titles NPC not found in workspace.NPCs!")
+            end
+    	end
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Tournament Register",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Tournament Register")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("Tournament Register not found in workspace.NPCs!")
+            end
+    	end
+})
+
 Tab:CreateDivider()
 
 local Label = Tab:CreateLabel({
