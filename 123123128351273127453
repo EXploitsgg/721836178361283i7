@@ -487,6 +487,8 @@ local Button = Tab:CreateButton({
                 Duration = 5; -- Time in seconds the notification stays visible
             })
         end
+
+    
         
         -- Example usage:
         showNotification("Dosent work cuz im still working on it!")
@@ -551,37 +553,58 @@ local Label = Tab:CreateLabel({
 	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
 })
 
-local Input = Tab:CreateInput({
+-- Get the Players service and the local player
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+
+-- Build an array of player names (excluding the local player) for the dropdown options
+local playersList = {}
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= localPlayer then
+        table.insert(playersList, player.Name)
+    end
+end
+
+-- Fallback in case there are no other players
+if #playersList == 0 then
+    playersList = {"No players available"}
+end
+
+-- Create the dropdown with the list of player names
+local Dropdown = Tab:CreateDropdown({
     Name = "Teleport to Player",
-    PlaceholderText = "Enter Player Name",
-    Enter = true,
-    Callback = function(playerName)
-        local Players = game:GetService("Players")
-        local targetPlayer = Players:FindFirstChild(playerName)
-
+    Description = "Select a player to teleport to their character.",
+    Options = playersList,                   -- List of player names
+    CurrentOption = playersList[1],          -- Default option (first name in the list)
+    MultipleOptions = false,                 
+    SpecialType = nil,
+    Callback = function(selectedPlayerName)
+        -- Find the target player based on the selected name
+        local targetPlayer = Players:FindFirstChild(selectedPlayerName)
         if targetPlayer then
+            -- Ensure the target player's character is loaded
             local character = targetPlayer.Character or targetPlayer.CharacterAdded:Wait()
-            local destination = character and character.PrimaryPart
-
-            if destination then
-                local localPlayer = Players.LocalPlayer
+            local targetHRP = character:FindFirstChild("HumanoidRootPart")
+            if targetHRP then
+                -- Ensure the local player's character is ready and has a HumanoidRootPart
                 local localCharacter = localPlayer.Character or localPlayer.CharacterAdded:Wait()
-                local localHRP = localCharacter and localCharacter.PrimaryPart
-
+                local localHRP = localCharacter:FindFirstChild("HumanoidRootPart")
+                
                 if localHRP then
-                    localHRP.CFrame = destination.CFrame
-                    print("Teleported to " .. targetPlayer.Name)
+                    -- Teleport the local player's character to the target's position
+                    localHRP.CFrame = targetHRP.CFrame
+                    print("Teleported to "..selectedPlayerName)
                 else
-                    warn("Your character is missing a PrimaryPart!")
+                    warn("Your character is missing a HumanoidRootPart!")
                 end
             else
-                warn("Target player has no valid character or PrimaryPart!")
+                warn("The player " .. selectedPlayerName .. " doesn't have a HumanoidRootPart!")
             end
         else
-            warn("Player '" .. playerName .. "' not found!")
+            warn("Player " .. selectedPlayerName .. " not found!")
         end
     end
-}, "Input")
+}, "Dropdown")
 
 local Tab = Window:CreateTab({
 	Name = "Misc",
@@ -705,4 +728,73 @@ local Button = Tab:CreateButton({
     	Callback = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
     	end
+})
+
+local Tab = Window:CreateTab({
+	Name = "Boss related",
+	Icon = "view_in_ar",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+
+local Label = Tab:CreateLabel({
+	Text = "Cake Queen",
+	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Button = Tab:CreateButton({
+    Name = "Teleport to Cake Queen",
+    Description = "Teleports you to Cake Queen located in workspace.Characters.NPCs",
+    Callback = function()
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Locate the 'Cake Queen' NPC inside workspace.Characters.NPCs
+        local npcFolder = workspace:FindFirstChild("Characters") and workspace.Characters:FindFirstChild("NPCs")
+        local destination = npcFolder and npcFolder:FindFirstChild("Cake Queen")
+        
+        if destination then
+            -- Ensure the NPC has a PrimaryPart for teleportation
+            if destination.PrimaryPart then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+                print("Teleported to Cake Queen!")
+            else
+                warn("Cake Queen does not have a PrimaryPart set!")
+            end
+        else
+            warn("Cake Queen not found in workspace.Characters.NPCs!")
+        end
+    end
+})
+
+local Button = Tab:CreateButton({
+    Name = "Kill cake queen",
+    Description = "Instantly kills the Cake Queen NPC.",
+    Callback = function()
+        local cakeQueen = workspace.Characters.NPCs:FindFirstChild("Cake Queen")
+        if cakeQueen then
+            local humanoid = cakeQueen:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.Health = 0
+                print("Cake Queen has been 1shotted!")
+            else
+                warn("Cake Queen does not contain a Humanoid!")
+            end
+        else
+            warn("Cake Queen was not found in workspace.Characters.NPCs!")
+        end
+    end
+}, "CakeQueenButton")
+
+Tab:CreateDivider()
+
+local Label = Tab:CreateLabel({
+	Text = "Marco",
+	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Label = Tab:CreateLabel({
+	Text = "Coming Soon! ....",
+	Style = 3 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
 })
