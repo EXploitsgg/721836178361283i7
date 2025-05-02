@@ -165,6 +165,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Colloseum",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Colloseum")
+
 			local player = game.Players.LocalPlayer
 			local colosseumBlock = game.Workspace.Areas:FindFirstChild("Colloseum")
 			
@@ -180,6 +191,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Dressrosa",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Dessrosa")
+
 			local player = game.Players.LocalPlayer
 			local DressrosaBlock = game.Workspace.Areas:FindFirstChild("Dressrosa")
 			
@@ -195,6 +217,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Forest",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Forest")
+
 			local player = game.Players.LocalPlayer
 			local ForestBlock = game.Workspace.Areas:FindFirstChild("Forest")
 			
@@ -210,6 +243,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Safe zone",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Safe zone")
+
 			local player = game.Players.LocalPlayer
 			local spawnLocation = game.Workspace.SafeZones.MainSpawn:FindFirstChild("SpawnLocation")
 			
@@ -222,6 +266,8 @@ local Button = Tab:CreateButton({
     	end
 })
 
+Tab:CreateDivider()
+
 local Label = Tab:CreateLabel({
 	Text = "Teleport NPC's",
 	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
@@ -231,6 +277,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Kuma",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Kuma")
+
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             
@@ -248,6 +305,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Mystery Guy",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Mystery Guy")
+
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             
@@ -265,6 +333,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Scientist",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Scientist")
+            
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             
@@ -282,6 +361,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to suro book",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Warning";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Dosent teleport if u havent accepted the quest!")
+
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             
@@ -299,6 +389,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Titles NPC",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Titles NPC")
+           
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             
@@ -316,6 +417,17 @@ local Button = Tab:CreateButton({
 	Name = "Teleport to Tournament Register",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Tournament Register")
+
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             
@@ -327,6 +439,70 @@ local Button = Tab:CreateButton({
                 warn("Tournament Register not found in workspace.NPCs!")
             end
     	end
+})
+
+Tab:CreateDivider()
+
+local Label = Tab:CreateLabel({
+	Text = "Teleport (Cake island)",
+	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Button = Tab:CreateButton({
+	Name = "Teleport to Kuma",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            local function showNotification(message)
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Success";
+                    Text = message;
+                    Duration = 5; -- Time in seconds the notification stays visible
+                })
+            end
+            
+            -- Example usage:
+            showNotification("Successfully teleported to Kuma!")
+            
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            
+            local destination = workspace.NPCs:FindFirstChild("Kuma")
+            
+            if destination then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+            else
+                warn("Kuma not found in workspace.NPCs!")
+            end
+    	end
+})
+
+local Button = Tab:CreateButton({
+    Name = "Teleport to SafeZone",
+    Description = nil,
+    Callback = function()
+        local function showNotification(message)
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Warning";
+                Text = message;
+                Duration = 5; -- Time in seconds the notification stays visible
+            })
+        end
+        
+        -- Example usage:
+        showNotification("Dosent work cuz im still working on it!")
+        
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        local safeZones = workspace.SafeZones:GetChildren()
+        local destination = safeZones[6] -- Gets the 6th child
+
+        if destination and destination.PrimaryPart then
+            character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+        else
+            warn("SafeZone 6 not found or missing PrimaryPart!")
+        end
+    end
 })
 
 Tab:CreateDivider()
@@ -367,6 +543,45 @@ local Button = Tab:CreateButton({
         end
     end
 }, "TeleportBigTree")
+
+Tab:CreateDivider()
+
+local Label = Tab:CreateLabel({
+	Text = "Player Teleport",
+	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+})
+
+local Input = Tab:CreateInput({
+    Name = "Teleport to Player",
+    PlaceholderText = "Enter Player Name",
+    Enter = true,
+    Callback = function(playerName)
+        local Players = game:GetService("Players")
+        local targetPlayer = Players:FindFirstChild(playerName)
+
+        if targetPlayer then
+            local character = targetPlayer.Character or targetPlayer.CharacterAdded:Wait()
+            local destination = character and character.PrimaryPart
+
+            if destination then
+                local localPlayer = Players.LocalPlayer
+                local localCharacter = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+                local localHRP = localCharacter and localCharacter.PrimaryPart
+
+                if localHRP then
+                    localHRP.CFrame = destination.CFrame
+                    print("Teleported to " .. targetPlayer.Name)
+                else
+                    warn("Your character is missing a PrimaryPart!")
+                end
+            else
+                warn("Target player has no valid character or PrimaryPart!")
+            end
+        else
+            warn("Player '" .. playerName .. "' not found!")
+        end
+    end
+}, "Input")
 
 local Tab = Window:CreateTab({
 	Name = "Misc",
