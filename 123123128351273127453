@@ -1,65 +1,84 @@
-local player = game.Players.LocalPlayer
-local gui = Instance.new("ScreenGui", player.PlayerGui)
-local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(1, 0, 1.1, 0) -- Covers the toolbar fully
-frame.Position = UDim2.new(0, 0, -0.05, 0) -- Adjust for toolbar coverage
-frame.BackgroundColor3 = Color3.new(0, 0, 0)
-
--- Title Label
-local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, 0, 0.2, 0)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.Text = "Welcome! Enter the Key to Continue"
-title.TextColor3 = Color3.new(1, 1, 1)
-title.BackgroundTransparency = 1
-title.Font = Enum.Font.SourceSansBold
-title.TextSize = 40
-
--- Key Entry Box
-local keyBox = Instance.new("TextBox", frame)
-keyBox.Size = UDim2.new(0.5, 0, 0.1, 0)
-keyBox.Position = UDim2.new(0.25, 0, 0.5, 0)
-keyBox.PlaceholderText = "Delete this and enter key"
-keyBox.TextColor3 = Color3.new(1, 1, 1)
-keyBox.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-keyBox.Font = Enum.Font.SourceSansBold
-keyBox.TextSize = 24
-keyBox.ClearTextOnFocus = false
-
--- Submit Button
-local submitButton = Instance.new("TextButton", frame)
-submitButton.Size = UDim2.new(0.3, 0, 0.1, 0)
-submitButton.Position = UDim2.new(0.35, 0, 0.65, 0)
-submitButton.Text = "(Delete text above and place key) Submit Key"
-submitButton.TextColor3 = Color3.new(1, 1, 1)
-submitButton.BackgroundColor3 = Color3.new(0, 0.8, 0)
-submitButton.Font = Enum.Font.SourceSansBold
-submitButton.TextSize = 24
-
--- Correct Key (Change this to your desired key)
-local correctKey = "FruitBattlegrounds2025"
-
--- Block execution until the correct key is entered
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local UserId = LocalPlayer.UserId
+local BannedPlayers = {} -- Stores banned player UserIds
+local AdminUserIds = {1137073737, 8274291975} -- List of admin user IDs
+local correctKey = "FruitBattlegrounds2025" -- Required key
 local keyEntered = false
 
-submitButton.MouseButton1Click:Connect(function()
-    if keyBox.Text == correctKey then
-        keyEntered = true
-        gui:Destroy() -- Close UI when correct key is entered
-    else
-        keyBox.Text = "" -- Clear box for retry
-        keyBox.PlaceholderText = "Incorrect! Try Again"
-        keyBox.TextColor3 = Color3.new(1, 0, 0) -- Red text for error indication
-        wait(1)
-        keyBox.TextColor3 = Color3.new(1, 1, 1) -- Reset color
-        keyBox.PlaceholderText = "Enter Key Here"
+-- Function to check if a player is an admin
+local function isAdmin(userId)
+    for _, adminId in ipairs(AdminUserIds) do
+        if userId == adminId then
+            return true
+        end
     end
-end)
+    return false
+end
 
--- Wait until key is entered correctly before proceeding
-repeat wait() until keyEntered
+-- If player is banned, kick them immediately
+if BannedPlayers[UserId] then
+    LocalPlayer:Kick("You have been banned from using the script.")
+end
 
--- Now continue with the rest of the script
+-- Check if the player is an admin
+if isAdmin(UserId) then
+    print("Welcome Krak!")
+    keyEntered = true
+else
+    -- Create key entry system for non-admin players
+    local keyGui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
+    local frame = Instance.new("Frame", keyGui)
+    frame.Size = UDim2.new(1, 0, 1.1, 0)
+    frame.Position = UDim2.new(0, 0, -0.05, 0)
+    frame.BackgroundColor3 = Color3.new(0, 0, 0)
+
+    local title = Instance.new("TextLabel", frame)
+    title.Size = UDim2.new(1, 0, 0.2, 0)
+    title.Position = UDim2.new(0, 0, 0, 0)
+    title.Text = "Welcome! Enter the Key to Continue"
+    title.TextColor3 = Color3.new(1, 1, 1)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.SourceSansBold
+    title.TextSize = 40
+
+    local keyBox = Instance.new("TextBox", frame)
+    keyBox.Size = UDim2.new(0.5, 0, 0.1, 0)
+    keyBox.Position = UDim2.new(0.25, 0, 0.5, 0)
+    keyBox.PlaceholderText = "Enter Key Here"
+    keyBox.TextColor3 = Color3.new(1, 1, 1)
+    keyBox.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    keyBox.Font = Enum.Font.SourceSansBold
+    keyBox.TextSize = 24
+    keyBox.ClearTextOnFocus = false
+
+    local submitButton = Instance.new("TextButton", frame)
+    submitButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+    submitButton.Position = UDim2.new(0.35, 0, 0.65, 0)
+    submitButton.Text = "Submit Key"
+    submitButton.TextColor3 = Color3.new(1, 1, 1)
+    submitButton.BackgroundColor3 = Color3.new(0, 0.8, 0)
+    submitButton.Font = Enum.Font.SourceSansBold
+    submitButton.TextSize = 24
+
+    submitButton.MouseButton1Click:Connect(function()
+        if keyBox.Text == correctKey then
+            keyEntered = true
+            keyGui:Destroy() -- Close UI upon correct key entry
+        else
+            keyBox.Text = ""
+            keyBox.PlaceholderText = "Incorrect! Try Again"
+            keyBox.TextColor3 = Color3.new(1, 0, 0) -- Red text for error indication
+            wait(1)
+            keyBox.TextColor3 = Color3.new(1, 1, 1) -- Reset color
+            keyBox.PlaceholderText = "Enter Key Here"
+        end
+    end)
+
+    -- Wait until the correct key is entered before proceeding
+    repeat wait() until keyEntered
+end
+
 print("Key verified! Proceeding with the script...")
 
 local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/refs/heads/main/source.lua", true))()
@@ -107,52 +126,127 @@ local Paragraph = Tab:CreateParagraph({
 })
 
 local VirtualInputManager = game:GetService("VirtualInputManager")
-local VirtualUser = game:GetService("VirtualUser")
-VirtualUser:CaptureController()
-
 local autoActivateMoves = false
+local running = false  -- flag to indicate if the loop is already running
 
--- Helper function to simulate a key press
+-- Define the keys corresponding to your inventory moves.
+local inventoryKeys = {
+    Enum.KeyCode.One,
+    Enum.KeyCode.Two,
+    Enum.KeyCode.Three,
+    Enum.KeyCode.Four,
+    Enum.KeyCode.Five,
+    Enum.KeyCode.Six,
+}
+
+-- Helper function to simulate a key press.
 local function simulateKeyPress(key)
-    -- Send key down then key up events with a brief pause
     VirtualInputManager:SendKeyEvent(true, key, false, game)
-    wait(0.1)
+    wait(0.1)  -- A brief press duration; adjust if needed
     VirtualInputManager:SendKeyEvent(false, key, false, game)
 end
 
--- Function that cycles through keys 1-5 then simulates a mouse click
+-- Function that cycles through all inventory moves one by one.
 local function activateMoves()
+    running = true
     while autoActivateMoves do
-        simulateKeyPress(Enum.KeyCode.One)
-        wait(1)
-        simulateKeyPress(Enum.KeyCode.Two)
-        wait(1)
-        simulateKeyPress(Enum.KeyCode.Three)
-        wait(1)
-        simulateKeyPress(Enum.KeyCode.Four)
-        wait(1)
-        simulateKeyPress(Enum.KeyCode.Five)
-        wait(1)
-        -- Simulate a mouse click (adjust the Vector2 position as needed)
-        VirtualUser:Button1Down(Vector2.new(500, 500))  
-        wait(0.1)
-        VirtualUser:Button1Up(Vector2.new(500, 500))
-        wait(1)
+        for i, key in ipairs(inventoryKeys) do
+            if not autoActivateMoves then break end
+            simulateKeyPress(key)
+            wait(1.7)  -- Delay between each move activation, adjust as needed
+        end
     end
+    running = false
 end
 
--- Create the toggle using your UI system
+-- Create a toggle to control auto-activation using your UI system.
 local Toggle = Tab:CreateToggle({
     Name = "Auto Use Moves with Keys",
-    Description = "Goes through your inventory moves by pressing 1-5 and clicking the screen.",
+    Description = "Cycles through all of your inventory moves (keys 1-9) one by one.",
     CurrentValue = false,
     Callback = function(Value)
         autoActivateMoves = Value
-        if autoActivateMoves then
-            activateMoves()  -- Start the loop
+        if autoActivateMoves and not running then
+            spawn(activateMoves)
         end
     end
 }, "ToggleAutoMoves")
+
+local Button = Tab:CreateButton({
+	Name = "Server Hop",
+	Description = "Server Hops", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+            Time = 1 -- seconds
+            repeat wait() until game:IsLoaded()
+            wait(Time)
+            local PlaceID = game.PlaceId
+            local AllIDs = {}
+            local foundAnything = ""
+            local actualHour = os.date("!*t").hour
+            local Deleted = false
+            function TPReturner()
+               local Site;
+               if foundAnything == "" then
+                   Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+               else
+                   Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+               end
+               local ID = ""
+               if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+                   foundAnything = Site.nextPageCursor
+               end
+               local num = 0;
+               for i,v in pairs(Site.data) do
+                   local Possible = true
+                   ID = tostring(v.id)
+                   if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                       for _,Existing in pairs(AllIDs) do
+                           if num ~= 0 then
+                               if ID == tostring(Existing) then
+                                   Possible = false
+                               end
+                           else
+                               if tonumber(actualHour) ~= tonumber(Existing) then
+                                   local delFile = pcall(function()
+                                       delfile("NotSameServers.json")
+                                       AllIDs = {}
+                                       table.insert(AllIDs, actualHour)
+                                   end)
+                               end
+                           end
+                           num = num + 1
+                       end
+                       if Possible == true then
+                           table.insert(AllIDs, ID)
+                           wait()
+                           pcall(function()
+                               writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                               wait()
+                               game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                           end)
+                           wait(4)
+                       end
+                   end
+               end
+            end
+             
+            function Teleport()
+               while wait() do
+                   pcall(function()
+                       TPReturner()
+                       if foundAnything ~= "" then
+                           TPReturner()
+                       end
+                   end)
+               end
+            end
+             
+            -- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
+            Teleport()
+    	end
+})
+
+
 
 local Tab = Window:CreateTab({
 	Name = "Teleport",
@@ -606,6 +700,58 @@ local Dropdown = Tab:CreateDropdown({
     end
 }, "Dropdown")
 
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+
+-- Build the list of players (excluding LocalPlayer)
+local playersList = {}
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= localPlayer then
+        table.insert(playersList, player.Name)
+    end
+end
+
+-- Create the dropdown with the list of players
+local Dropdown = Tab:CreateDropdown({
+    Name = "Bring Player to Me",
+    Description = "Select a player to teleport them to your location.",
+    Options = playersList,
+    CurrentOption = playersList[1],
+    MultipleOptions = false,
+    SpecialType = nil,
+    Callback = function(selectedPlayerName)
+        local targetPlayer = Players:FindFirstChild(selectedPlayerName)
+        if targetPlayer then
+            local targetCharacter = targetPlayer.Character or targetPlayer.CharacterAdded:Wait()
+            local localCharacter = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+            
+            if targetCharacter and localCharacter then
+                local targetHRP = targetCharacter:FindFirstChild("HumanoidRootPart")
+                local localHRP = localCharacter:FindFirstChild("HumanoidRootPart")
+                if targetHRP and localHRP then
+                    -- Teleport the target player's character near your location
+                    targetHRP.CFrame = localHRP.CFrame * CFrame.new(3, 0, 3)
+                    
+                    -- Anchor the target's HRP briefly to help keep them in place.
+                    targetHRP.Anchored = true
+                    delay(1, function()  -- unanchor after 1 second
+                        if targetHRP then
+                            targetHRP.Anchored = false
+                        end
+                    end)
+                    print("Teleported " .. selectedPlayerName .. " to your location!")
+                else
+                    warn("Either your character or ".. selectedPlayerName .. "'s character is missing a HumanoidRootPart!")
+                end
+            else
+                warn("Either the target or your character is not loaded!")
+            end
+        else
+            warn("Player '" .. tostring(selectedPlayerName) .. "' not found!")
+        end
+    end
+}, "BringPlayerDropdown")
+
 local Tab = Window:CreateTab({
 	Name = "Misc",
 	Icon = "view_in_ar",
@@ -770,14 +916,23 @@ local Button = Tab:CreateButton({
 
 local Button = Tab:CreateButton({
     Name = "Kill cake queen",
-    Description = "Instantly kills the Cake Queen NPC.",
+    Description = "Instantly kills the Cake Queen NPC and credits the kill to you.",
     Callback = function()
         local cakeQueen = workspace.Characters.NPCs:FindFirstChild("Cake Queen")
         if cakeQueen then
             local humanoid = cakeQueen:FindFirstChildOfClass("Humanoid")
             if humanoid then
+                -- Create a creator tag to credit the kill to the LocalPlayer
+                local creatorTag = Instance.new("ObjectValue")
+                creatorTag.Name = "creator"
+                creatorTag.Value = game.Players.LocalPlayer
+                creatorTag.Parent = humanoid
+
+                -- Remove the creator tag after 2 seconds
+                game:GetService("Debris"):AddItem(creatorTag, 2)
+
                 humanoid.Health = 0
-                print("Cake Queen has been 1shotted!")
+                print("Cake Queen has been 1shotted by " .. game.Players.LocalPlayer.Name .. "!")
             else
                 warn("Cake Queen does not contain a Humanoid!")
             end
@@ -794,7 +949,56 @@ local Label = Tab:CreateLabel({
 	Style = 1 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
 })
 
-local Label = Tab:CreateLabel({
-	Text = "Coming Soon! ....",
-	Style = 3 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
+local Button = Tab:CreateButton({
+    Name = "Teleport to Marco",
+    Description = "Teleports you to Marco located in workspace.Characters.NPCs",
+    Callback = function()
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Locate the 'Cake Queen' NPC inside workspace.Characters.NPCs
+        local npcFolder = workspace:FindFirstChild("Characters") and workspace.Characters:FindFirstChild("NPCs")
+        local destination = npcFolder and npcFolder:FindFirstChild("Marco")
+        
+        if destination then
+            -- Ensure the NPC has a PrimaryPart for teleportation
+            if destination.PrimaryPart then
+                character:SetPrimaryPartCFrame(destination.PrimaryPart.CFrame)
+                print("Teleported to Marco!")
+            else
+                warn("Marco does not have a PrimaryPart set!")
+            end
+        else
+            warn("Marco not found in workspace.Characters.NPCs!")
+        end
+    end
 })
+
+local Button = Tab:CreateButton({
+    Name = "Kill Marco",
+    Description = "Instantly kills the Marco NPC and credits the kill to you.",
+    Callback = function()
+        local Marco = workspace.Characters.NPCs:FindFirstChild("Marco")
+        if Marco then
+            local humanoid = Marco:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                -- Create a creator tag to credit the kill to the LocalPlayer
+                local creatorTag = Instance.new("ObjectValue")
+                creatorTag.Name = "creator"
+                creatorTag.Value = game.Players.LocalPlayer
+                creatorTag.Parent = humanoid
+                
+                -- Optionally, remove the creator tag after a short delay
+                game:GetService("Debris"):AddItem(creatorTag, 2)
+                
+                humanoid.Health = 0
+                print("Marco has been 1shotted by " .. game.Players.LocalPlayer.Name .. "!")
+            else
+                warn("Marco does not contain a Humanoid!")
+            end
+        else
+            warn("Marco was not found in workspace.Characters.NPCs!")
+        end
+    end
+}, "MarcoButton")
